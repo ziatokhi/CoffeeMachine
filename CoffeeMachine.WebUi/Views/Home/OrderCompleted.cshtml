@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "OrderCompleted";
+}
+
+<div id="main" class="col-12  align-content-center">
+
+    <div class="row align-content-center"> Getting Ready in <h1 id="timer"> </h1> Seconds </div>
+    <iframe id="frame" src="https://giphy.com/embed/5nq3awepp5jP4zTti9"
+            width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+</div>
+<script>
+    // Set the date we're counting down to
+    var countdown = 30;
+    var redirect = 5;
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        countdown = countdown - 1;
+        document.getElementById("timer").innerHTML = countdown;
+
+        if (countdown < 0) {
+
+            redirect = redirect - 1;
+
+            if (redirect < 0) {
+
+                window.location.replace("index");
+            }
+            document.getElementById("main").innerHTML = "<a href='index'>Enjoy the Coffee</a>";
+        }
+    }, 1000);
+</script>

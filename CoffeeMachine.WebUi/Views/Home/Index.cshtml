@@ -1,0 +1,28 @@
+﻿@model CoffeeMachine.Application.BadgeLastOrders.Queries.BadgeLastOrderPreviewModel
+@{
+    ViewData["Title"] = "Coffee Machine";
+}
+<div class="container">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Please Tap Your Badge</h4>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 row">
+                            @Html.TextBox("BadgeNo", null, new { @class = "form-control col-8", required = "required"})
+                            
+                            &nbsp;<input type="submit" asp-action="OrderCoffee" value="Proceed" class="btn btn-info" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

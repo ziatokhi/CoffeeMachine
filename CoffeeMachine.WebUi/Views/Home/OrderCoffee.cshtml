@@ -1,0 +1,67 @@
+﻿@model CoffeeMachine.Application.BadgeLastOrders.Queries.BadgeLastOrderPreviewModel
+@{
+    ViewData["Title"] = "Coffee Machine";
+
+}
+<div class=" container">
+    <form method="post">
+        <input asp-for="DrinkTypeId" required min="1" hidden />
+        <input asp-for="BadgeNo" hidden />
+        <table class=" table  table-light">
+            <tr>
+                <td colspan="2">
+                    <h4>Welcome Badge No.@Model.BadgeNo </h4>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="btn-group col-12" data-toggle="buttons" role="group">
+                        @foreach (var _drink in Model.DrinkTypeModelPreview)
+                        {
+
+                            <div class="btn btn-outline btn-info btn-lg col-12 @(_drink.IsSelected==true? "active":"")"
+                                 onclick="document.getElementById('DrinkTypeId').value =@_drink.DrinkType.DrinkTypeId;document.getElementById('btnOrder').disabled = false;">
+                                @Html.RadioButton("options", _drink.DrinkType.DrinkTypeId, _drink.IsSelected, new { @id = _drink.DrinkType.DrinkTypeId, @class = "custom-control-input" })
+                                @_drink.DrinkType.DrinkTypeName
+                            </div>
+
+                        }
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="btn-group col-12" data-toggle="buttons" role="group">
+                        <label class="btn btn-outline btn-info btn-lg col-12 @(Model.IsOwnMug==true? "active":"")">
+                            @Html.CheckBox("IsOwnMug", Model.IsOwnMug, new { @class = "custom-control-input" })
+                            Use Own Mug
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+
+                    <h2>Sugar Level</h2>
+                </td>
+                <td>
+                    <div class="btn-group  float-right" data-toggle="buttons" role="group">
+                        <button class="btn btn-outline btn-info btn-lg" onclick="document.getElementById('SugarLevel').stepDown(1)">-</button>
+                        <input name="SugarLevel" class="text-center font-weight-bold" required readonly asp-for="SugarLevel" type="number" step="1" max="10" min="0" />
+                        <button class="btn btn-outline btn-info  btn-lg" onclick="document.getElementById('SugarLevel').stepUp(1)">+</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <button asp-action="Cancel" class="btn btn-outline btn-danger btn-lg  col-12">Cancel</button>
+                </td>
+                <td>
+                    <button asp-action="SaveOrder" id="btnOrder" class="btn btn-outline btn-info btn-lg  col-12"   disabled="@(Model.DrinkTypeId==0? "disable":"none")">Order</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
